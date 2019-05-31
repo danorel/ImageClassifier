@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-
+import argparse
 import glob
 import math
 import os
@@ -329,55 +329,23 @@ def ahash(database_src, coefficients):
     classification(image_hashes, image_string_list, coefficients)
 
 
-"""
-    Console application. Importing the sys library to work with console parameters.
-    
-    Launch the program with next syntax:
-    
-    python3 solution.py [1] [2] [3] [4] [5] - to define coefficients
-    --- OR ---
-    python3 solution.py [1] [2] - to compile without coefficients (the program will use the default ones, the most optimal)
-    
-    --- ANOTHER OPTION ---
-    
-    ./solution.py [1] [2] [3] [4] [5] - to define coefficients
-    --- OR ---
-    ./solution.py [1] [2] - to compile without coefficients (the program will use the default ones, the most optimal)
-    
-    Parameters:
-    [1] Algorithm we use, options: {ahash, dhash, phash}
-    [2] The working directory, where we store the images.
-    {[3], [4], [5]} The scale parameters, for dublicate/modification/similarity finding, that we will use in our program. 
-    [3] - dublicate (the most compatible input values are {0, 1})
-    [4] - modifications: (the most compatible input values are {6, 7, 8})
-    [5] - similar: (the most compatible input values are {13, 14, 15, 16})
-"""
-
-
 def main():
-    if len(sys.argv) == 6:
-        if str(sys.argv[1]) == "ahash":
-            ahash(sys.argv[2], [int(sys.argv[3]), int(sys.argv[4]), int(sys.argv[5])])
-        elif str(sys.argv[1]) == "dhash":
-            dhash(sys.argv[2], [int(sys.argv[3]), int(sys.argv[4]), int(sys.argv[5])])
-        elif str(sys.argv[1]) == "phash":
-            phash(sys.argv[2], [int(sys.argv[3]), int(sys.argv[4]), int(sys.argv[5])])
-        else:
-            raise AttributeError("Failed to find the algorithm. Try again please!")
-    elif len(sys.argv) == 3:
-        if str(sys.argv[1]) == "ahash":
-            ahash(sys.argv[2], [0, 6, 14])
-        elif str(sys.argv[1]) == "dhash":
-            dhash(sys.argv[2], [0, 14, 32])
-        elif str(sys.argv[1]) == "phash":
-            phash(sys.argv[2], [0, 6, 16])
-        else:
-            raise AttributeError("Failed to find the algorithm. Try again please!")
+    parser = argparse.ArgumentParser()
+    parser.add_argument('src', type=str, help='The working directory, where we store the images')
+    parser.add_argument('-f', '--func', type=str, default='dhash', help='The functions we use to solve the problem: ahash, dhash, phash. The default algorithm is dhash')
+    parser.add_argument('-d', '--dub', type=int, default=0, help='Dublicate parameter. The optimal value is 0 for all algorithms')
+    parser.add_argument('-m', '--mod', type=int, default=14, help='Modification parameter. The optimal values are: 6 - for ahash/phash and 14 - for dhash')
+    parser.add_argument('-s', '--sim', type=int, default=32,help='Similar parameter. The optimal values are: 13 - for ahash/phash and 32 - for dhash')
+    args = vars(parser.parse_args())
+    print(args)
+    if args['func'] == "ahash":
+        ahash(args['src'], [args['dub'], args['mod'], args['sim']])
+    elif args['func'] == "dhash":
+        dhash(args['src'], [args['dub'], args['mod'], args['sim']])
+    elif args['func'] == "phash":
+        phash(args['src'], [args['dub'], args['mod'], args['sim']])
     else:
-        raise AttributeError(
-            "ERROR! "
-            "Cannot run the program due to the wrong input data. Re-run the program with another amount of parameters."
-        )
+        parser.print_help()
 
 
 main()
