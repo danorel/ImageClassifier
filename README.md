@@ -1,11 +1,12 @@
 # RailsReactML
-Implementing the classification problem: dublicate, modification, similar classification.
+Implementing the **classification** problem: **dublicate**, **modification**, **similar classification**.
 
-Console application. Importing the argparse library to work with console parameters.
+**Console application**. Importing the *argparse* library to work with console parameters.
         
- >> python3 solution.py -h   
+ ```python3 solution.py -h
+ ```
 
-usage: solution.py [-h] [-f FUNC] [-d DUB] [-m MOD] [-s SIM] src
+```usage: solution.py [-h] [-f FUNC] [-d DUB] [-m MOD] [-s SIM] src
 
 positional arguments:
   src                   The working directory, where we store the images
@@ -20,3 +21,4 @@ optional arguments:
                         for ahash/phash and 14 - for dhash
   -s SIM, --sim SIM     Similar parameter. The optimal values are: 13 - for
                         ahash/phash and 32 - for dhash
+```                        
