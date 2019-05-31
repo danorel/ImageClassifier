@@ -3,10 +3,12 @@ Implementing the **classification** problem: **dublicate**, **modification**, **
 
 **Console application**. Importing the *argparse* library to work with console parameters.
         
- ```python3 solution.py -h
+ ```
+ python3 solution.py -h
  ```
 
-```usage: solution.py [-h] [-f FUNC] [-d DUB] [-m MOD] [-s SIM] src
+```
+usage: solution.py [-h] [-f FUNC] [-d DUB] [-m MOD] [-s SIM] src
 
 positional arguments:
   src                   The working directory, where we store the images
